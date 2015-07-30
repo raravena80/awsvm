@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Usage: awsvm use CONFIG
+# Summary: Switch to the specified configuration
+# Help: This command will set your environment to use the specified aws configuration
+
+set -e
+
+__awsvm_config $1
+
+# Provide awsvm completions
+if [ "$1" = "--complete" ]; then
+  exec ls $_AWSVM_ROOT/$configurations
+fi
+
+if [[ "$1" == "default" ]] && [ ! -d "$_AWSVM_ROOT/$config_path" ]; then
+  echo "No default config set"
+  exit 1
+elif [ ! -d "$_AWSVM_ROOT/$config_path" ]; then
+  echo "No configuration with that name was found"
+  exit 2
+fi
+
+rm -f $current_path
+ln -s $config_path $current_path
+
+echo "Using aws config \"$config\""

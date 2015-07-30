@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Usage: awsvm current
+# Summary: Shows the current config
+
+set -e
+
+__awsvm_config $1
+
+echo $config

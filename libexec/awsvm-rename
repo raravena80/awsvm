@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Usage: awsvm rename CONFIG NEW_CONFIG
+# Summary: This will rename a aws config to a new name
+# Help: This command allows you to rename a configuration
+
+set -e
+
+__awsvm_config $1
+
+if [ -z "$config" ]; then
+  echo "No name provided"
+  exit 1
+fi
+
+if [ ! -d $_AWSVM_ROOT/$config_path ]; then
+  echo "No configuration named $1 found."
+  awsvm list
+  exit 1
+fi
+
+if [ -z "$2" ]; then
+  echo "No destination name provided"
+  exit 1
+fi
+
+echo "Renaming: $config to $2" 
+mv $_AWSVM_ROOT/$config_path $_AWSVM_ROOT/$configurations/$2

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Usage: awsvm create CONFIG
+# Summary: Create a config in awsvm
+# Help: This command will create a aws configuration in awsvm, and switch to using it.
+
+set -e
+
+if [ -z "$1" ]; then
+  echo "No name provided"
+  exit 1
+fi
+
+__awsvm_config $1
+
+mkdir -p $_AWSVM_ROOT/$config_path
+
+echo "Creating configuration: $config"
+awsvm use $config
+echo "Copy your file credentials to ~/.aws and run 'aws help'"

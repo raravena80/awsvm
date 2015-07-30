@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Usage: awsvm version
+# Summary: Show the current versin of awsvm
+# Help: This command will show the currently installed version of awsvm
+
+set -e
+
+echo $_AWSVM_VERSION
