@@ -12,7 +12,7 @@ if [ ! -x "$(which bats 2> /dev/null)" ]; then
   echo "[setup] Installing bats"
   git clone https://github.com/sstephenson/bats.git
   pushd bats
-  sudo ./install.sh /usr/local
+  ./install.sh /usr/local
   popd
 fi
 
