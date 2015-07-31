@@ -1,7 +1,7 @@
 # AwsVM
 
+[![Build Status](https://travis-ci.org/raravena/awsvm.png?branch=master)](https://travis-ci.org/raravena80/awsvm)
 <!--
-[![Build Status](https://travis-ci.org/raravena/awsvm.png?branch=master)](https://travis-ci.org/trobrock/awsvm)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/raravena/awsvm/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 -->
 
