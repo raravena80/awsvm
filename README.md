@@ -1,9 +1,7 @@
 # AwsVM
 
 [![Build Status](https://travis-ci.org/raravena80/awsvm.png?branch=master)](https://travis-ci.org/raravena80/awsvm)
-<!--
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/raravena/awsvm/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
--->
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/raravena80/awsvm/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 Simple AWS environment manager, usage inspired by wayneeseguin/rvm
 
