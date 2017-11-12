@@ -1,6 +1,4 @@
-# AwsVM
-
-[![Build Status](https://travis-ci.org/raravena80/awsvm.png?branch=master)](https://travis-ci.org/raravena80/awsvm) [![Apache Licensed](https://img.shields.io/badge/license-Apache2.0-blue.svg)](https://raw.githubusercontent.com/raravena80/awsvm/master/LICENSE)
+# AwsVM [![Build Status](https://travis-ci.org/raravena80/awsvm.svg?branch=master)](https://travis-ci.org/raravena80/awsvm) [![Apache Licensed](https://img.shields.io/badge/license-Apache2.0-blue.svg)](https://raw.githubusercontent.com/raravena80/awsvm/master/LICENSE)
 
 Simple AWS environment manager, usage inspired by wayneeseguin/rvm
 
