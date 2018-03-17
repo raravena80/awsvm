@@ -79,5 +79,3 @@ When you are done.
 ```shell
 vagrant down
 ```
-
-# Contributors
