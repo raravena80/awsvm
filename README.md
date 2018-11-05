@@ -2,13 +2,11 @@
 
 Simple AWS environment manager, usage inspired by wayneeseguin/rvm
 
-Also modified from a fork of chefvm trobrock/chefvm
-
 ## Installation
 
-    # Awsvm will create a symlink between (~/.awsvm -> ~/.aws ), make sure you have no ~/.aws directory before installing
+    # AwsVM will create a symlink between (~/.awsvm -> ~/.aws ), make sure you have no ~/.aws directory before installing
     mv ~/.aws ~/.aws.bak
-    git clone git://github.com/trobrock/awsvm.git ~/.awsvm
+    git clone git://github.com/raraven80/awsvm.git ~/.awsvm
     ~/.awsvm/bin/awsvm init # Follow these instructions
     
 After following these instructions reload your terminal, then
