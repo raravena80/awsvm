@@ -10,19 +10,22 @@ __awsvm_config
 default_config=$(readlink $default_path) || true
 for c in $(ls $_AWSVM_ROOT/$configurations)
 do
-  opts="  "
-  if [[ "$c" == "$config" && "$c" == "$default_config" ]]; then
-    opts="*="
-  elif [[ "$c" == "$config" ]]; then
-    opts="=>"
-  elif [[ "$c" == "$default_config" ]]; then
-    opts="* "
+  if [[ "$c" == "default" ]]; then
+    continue
   fi
 
-  [[ "$c" != "default" ]] && echo "$opts $c"
+  if [[ "$c" == "$config" && "$c" == "$default_config" ]]; then
+    printf "${AWSVM_COLOR_GREEN}*=${AWSVM_COLOR_YELLOW} %s${AWSVM_COLOR_RESET}\\n" "$c"
+  elif [[ "$c" == "$config" ]]; then
+    printf "${AWSVM_COLOR_GREEN}=> %s${AWSVM_COLOR_RESET}\\n" "$c"
+  elif [[ "$c" == "$default_config" ]]; then
+    printf "${AWSVM_COLOR_YELLOW}*  %s${AWSVM_COLOR_RESET}\\n" "$c"
+  else
+    printf "   %s\\n" "$c"
+  fi
 done
 
 echo
-echo "=> - current"
-echo "*= - current and default"
-echo "*  - default"
+printf "${AWSVM_COLOR_GREEN}=>${AWSVM_COLOR_RESET} - current\\n"
+printf "${AWSVM_COLOR_GREEN}*=${AWSVM_COLOR_YELLOW}${AWSVM_COLOR_RESET} - current and default\\n"
+printf "${AWSVM_COLOR_YELLOW}*${AWSVM_COLOR_RESET}  - default\\n"

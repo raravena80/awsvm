@@ -2,7 +2,8 @@
 
 Simple AWS environment manager, inspired by [rvm](https://rvm.io/).
 
-`awsvm` helps you manage multiple AWS configurations and switch between them easily.
+
+`awsvm` helps you manage multiple AWS configurations and switch between them easily. The command-line output is colorized to improve readability.
 
 ## Installation
 

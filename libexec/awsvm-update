@@ -13,8 +13,8 @@ tag="$( git describe --tags --abbrev=0 `git rev-list --tags --max-count=1` )"
 diff="$( git cherry -v HEAD $tag | wc -l )"
 
 if [ "$diff" -eq 0 ]; then
-  echo "Already up to date."
+  printf "${AWSVM_COLOR_YELLOW}Already up to date.${AWSVM_COLOR_RESET}\\n"
 else
   git reset --hard $tag
-  echo "Updated to $tag!"
+  printf "${AWSVM_COLOR_GREEN}Updated to %s!${AWSVM_COLOR_RESET}\\n" "$tag"
 fi
