@@ -1,37 +1,74 @@
 #!/usr/bin/env bash
-# Usage: awsvm export CONFIG [--include-keys]
-# Summary: Export a configuration, ignoring key files (unless specified)
-# Help: This command will export a configuration to a file so it can be imported on another machine.
-
 set -e
 
-__awsvm_config $1
+# Include shared files
+source "$(dirname $0)/../share/awsvm/config.sh"
 
-if [ -z "$config" ]; then
-  echo "No name provided"
+usage() {
+  echo "Usage: awsvm export <config_name> [profile]"
+  echo "If profile is not provided, it will default to 'default'"
+}
+
+if [ -z "$1" ]; then
+  usage
   exit 1
 fi
 
-if [ ! -d $_AWSVM_ROOT/$config_path ]; then
-  echo "No configuration named $1 found."
-  awsvm list
+CONFIG_NAME="$1"
+PROFILE="${2:-default}"
+CONFIG_DIR="$_AWSVM_ROOT/configurations/$CONFIG_NAME"
+
+if [ ! -d "$CONFIG_DIR" ]; then
+  echo "Configuration '$CONFIG_NAME' not found." >&2
   exit 1
 fi
 
-if [ "$2" = "--include-keys" ]; then
-  include_keys=1
+CREDENTIALS_FILE="$CONFIG_DIR/credentials"
+CONFIG_FILE="$CONFIG_DIR/config"
+
+# Function to parse INI file and get value
+get_ini_value() {
+    local file="$1"
+    local profile="$2"
+    local key="$3"
+    local is_config_file=$(basename "$file")
+
+    local section
+    if [ "$is_config_file" = "config" ] && [ "$profile" != "default" ]; then
+        section="[profile $profile]"
+    else
+        section="[$profile]"
+    fi
+
+    awk -F ' = ' -v section="$section" -v key="$key" '
+        $0 == section { in_section=1; next }
+        /\[.*\]/ { in_section=0 }
+        in_section && $1 == key { print $2; exit }
+    ' "$file"
+}
+
+AWS_ACCESS_KEY_ID=$(get_ini_value "$CREDENTIALS_FILE" "$PROFILE" "aws_access_key_id")
+AWS_SECRET_ACCESS_KEY=$(get_ini_value "$CREDENTIALS_FILE" "$PROFILE" "aws_secret_access_key")
+AWS_SESSION_TOKEN=$(get_ini_value "$CREDENTIALS_FILE" "$PROFILE" "aws_session_token")
+AWS_DEFAULT_REGION=$(get_ini_value "$CONFIG_FILE" "$PROFILE" "region")
+
+if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+    # Check config file for credentials if not in credentials file
+    AWS_ACCESS_KEY_ID=$(get_ini_value "$CONFIG_FILE" "$PROFILE" "aws_access_key_id")
+    AWS_SECRET_ACCESS_KEY=$(get_ini_value "$CONFIG_FILE" "$PROFILE" "aws_secret_access_key")
+    AWS_SESSION_TOKEN=$(get_ini_value "$CONFIG_FILE" "$PROFILE" "aws_session_token")
 fi
 
-echo "Exporting: $config"
-
-pushd $_AWSVM_ROOT/$config_path > /dev/null
-export_file="$_AWSVM_ROOT/exports/${config}.tar.gz"
-rm -f $export_file
-
-if [ "$include_keys" = "1" ]; then
-  tar czf $export_file ./
-else
-  tar czf $export_file --exclude '*.pem' ./
+echo "export AWS_PROFILE=\"$PROFILE\""
+if [ -n "$AWS_ACCESS_KEY_ID" ]; then
+    echo "export AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\""
 fi
-
-popd > /dev/null
+if [ -n "$AWS_SECRET_ACCESS_KEY" ]; then
+    echo "export AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\""
+fi
+if [ -n "$AWS_SESSION_TOKEN" ]; then
+    echo "export AWS_SESSION_TOKEN=\"$AWS_SESSION_TOKEN\""
+fi
+if [ -n "$AWS_DEFAULT_REGION" ]; then
+    echo "export AWS_DEFAULT_REGION=\"$AWS_DEFAULT_REGION\""
+fi
