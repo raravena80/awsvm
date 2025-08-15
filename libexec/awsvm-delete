@@ -6,7 +6,7 @@
 set -e
 
 if [ -z "$1" ]; then
-  echo "No name provided"
+  printf "${AWSVM_COLOR_RED}No name provided${AWSVM_COLOR_RESET}\\n" >&2
   exit 1
 fi
 
@@ -24,4 +24,4 @@ fi
 
 rm -rf $_AWSVM_ROOT/$config_path
 
-echo "Removed $config"
+printf "${AWSVM_COLOR_GREEN}Removed %s${AWSVM_COLOR_RESET}\\n" "$config"

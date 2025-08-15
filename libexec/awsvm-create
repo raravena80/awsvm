@@ -6,7 +6,7 @@
 set -e
 
 if [ -z "$1" ]; then
-  echo "No name provided"
+  printf "${AWSVM_COLOR_RED}No name provided${AWSVM_COLOR_RESET}\\n" >&2
   exit 1
 fi
 
@@ -14,6 +14,6 @@ __awsvm_config $1
 
 mkdir -p $_AWSVM_ROOT/$config_path
 
-echo "Creating configuration: $config"
+printf "${AWSVM_COLOR_GREEN}Creating configuration: %s${AWSVM_COLOR_RESET}\\n" "$config"
 awsvm use $config
-echo "Copy your file credentials to ~/.aws and run 'aws help'"
+printf "${AWSVM_COLOR_YELLOW}Copy your file credentials to ~/.aws and run 'aws help'${AWSVM_COLOR_RESET}\\n"

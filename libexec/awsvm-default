@@ -16,4 +16,4 @@ __awsvm_config $1
 rm -f $default_path
 ln -s $config $default_path
 
-echo "Default aws configuration set to: $config"
+printf "${AWSVM_COLOR_GREEN}Default aws configuration set to: %s${AWSVM_COLOR_RESET}\\n" "$config"

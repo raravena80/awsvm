@@ -13,14 +13,14 @@ if [ "$1" = "--complete" ]; then
 fi
 
 if [[ "$1" == "default" ]] && [ ! -d "$_AWSVM_ROOT/$config_path" ]; then
-  echo "No default config set"
+  printf "${AWSVM_COLOR_RED}No default config set${AWSVM_COLOR_RESET}\\n" >&2
   exit 1
 elif [ ! -d "$_AWSVM_ROOT/$config_path" ]; then
-  echo "No configuration with that name was found"
+  printf "${AWSVM_COLOR_RED}No configuration with that name was found${AWSVM_COLOR_RESET}\\n" >&2
   exit 2
 fi
 
 rm -f $current_path
 ln -s $config_path $current_path
 
-echo "Using aws config \"$config\""
+printf "${AWSVM_COLOR_GREEN}Using aws config \"%s\"${AWSVM_COLOR_RESET}\\n" "$config"

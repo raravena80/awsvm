@@ -8,20 +8,20 @@ set -e
 __awsvm_config $1
 
 if [ -z "$config" ]; then
-  echo "No name provided"
+  printf "${AWSVM_COLOR_RED}No name provided${AWSVM_COLOR_RESET}\\n" >&2
   exit 1
 fi
 
 if [ ! -d $_AWSVM_ROOT/$config_path ]; then
-  echo "No configuration named $1 found."
+  printf "${AWSVM_COLOR_RED}No configuration named %s found.${AWSVM_COLOR_RESET}\\n" "$1" >&2
   awsvm list
   exit 1
 fi
 
 if [ -z "$2" ]; then
-  echo "No destination name provided"
+  printf "${AWSVM_COLOR_RED}No destination name provided${AWSVM_COLOR_RESET}\\n" >&2
   exit 1
 fi
 
-echo "Renaming: $config to $2" 
+printf "${AWSVM_COLOR_GREEN}Renaming: %s to %s${AWSVM_COLOR_RESET}\\n" "$config" "$2"
 mv $_AWSVM_ROOT/$config_path $_AWSVM_ROOT/$configurations/$2
